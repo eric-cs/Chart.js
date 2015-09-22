@@ -2163,8 +2163,8 @@
 			var startTime = Date.now();
 			var framesToDrop = 0;
 
-			this.animNow = Date.now();
-	    	this.elapsed = this.animNow - this.animThen;
+      this.animNow = Date.now();
+      this.elapsed = this.animNow - this.animThen;
 
 			if(this.dropFrames > 1){
 				framesToDrop = Math.floor(this.dropFrames);
