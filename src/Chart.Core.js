@@ -177,6 +177,9 @@
 			// String - Colour behind the legend colour block
 			multiTooltipKeyBackground: '#fff',
 
+			// Boolean - whether the labels of the x axis should be rotated
+			rotateXLabels: true,
+
 			// Function - Will fire on animation progression.
 			onAnimationProgress: function(){},
 
@@ -1650,7 +1653,7 @@
 				var xGridWidth = Math.floor(this.calculateX(1) - this.calculateX(0)) - 6;
 
 				//Max label rotate should be 90 - also act as a loop counter
-				while ((this.xLabelWidth > xGridWidth && this.xLabelRotation === 0) || (this.xLabelWidth > xGridWidth && this.xLabelRotation <= 90 && this.xLabelRotation > 0)){
+				while (this.rotateXLabels && ((this.xLabelWidth > xGridWidth && this.xLabelRotation === 0) || (this.xLabelWidth > xGridWidth && this.xLabelRotation <= 90 && this.xLabelRotation > 0))){
 					cosRotation = Math.cos(toRadians(this.xLabelRotation));
 
 					firstRotated = cosRotation * firstWidth;
