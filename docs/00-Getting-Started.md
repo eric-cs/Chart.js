@@ -205,6 +205,9 @@ Chart.defaults.global = {
 	// String - Template string for multiple tooltips
 	multiTooltipTemplate: "<%= value %>",
 
+	// Boolean/Number - whether the animation FPS should be limited (specify number of FPS for a limitation)
+	limitFps: false,
+
 	// Function - Will fire on animation progression.
 	onAnimationProgress: function(){},
 

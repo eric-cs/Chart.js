@@ -177,11 +177,8 @@
 			// String - Colour behind the legend colour block
 			multiTooltipKeyBackground: '#fff',
 
-			// Boolean - whether the animation FPS should be limited
+			// Boolean/Number - whether the animation FPS should be limited (specify number of FPS for a limitation)
 			limitFps: false,
-
-			// Number - FPS to use for the animation
-			fps: 60,
 
 			// Function - Will fire on animation progression.
 			onAnimationProgress: function(){},
@@ -2182,10 +2179,10 @@
 					this.animations[i].animationObject.currentStep = this.animations[i].animationObject.numSteps;
 				}
 
-				this.fpsInterval = 1000 / this.animations[i].chartInstance.options.fps;
 				if (!this.animations[i].chartInstance.options.limitFps || this.elapsed > this.fpsInterval) {
 					// Get ready for next frame by setting then=now, but...
 					// Also, adjust for fpsInterval not being multiple of 16.67
+					this.fpsInterval = 1000 / (this.animations[i].chartInstance.options.limitFps || 1);
 					this.animThen = this.animNow - (this.elapsed % this.fpsInterval);
 					this.animations[i].animationObject.render(this.animations[i].chartInstance, this.animations[i].animationObject);
 				}
