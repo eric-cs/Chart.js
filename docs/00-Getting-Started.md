@@ -205,8 +205,8 @@ Chart.defaults.global = {
 	// String - Template string for multiple tooltips
 	multiTooltipTemplate: "<%= value %>",
 
-  // Boolean - whether the labels of the x axis should be rotated
-  rotateXLabels: true,
+	// Boolean - whether the labels of the x axis should be rotated
+	rotateXLabels: true,
 
 	// Function - Will fire on animation progression.
 	onAnimationProgress: function(){},
