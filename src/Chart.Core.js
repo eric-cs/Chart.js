@@ -177,6 +177,12 @@
 			// String - Colour behind the legend colour block
 			multiTooltipKeyBackground: '#fff',
 
+			// Boolean - whether the animation FPS should be limited
+			limitFps: false,
+
+			// Number - FPS to use for the animation
+			fps: 60,
+
 			// Function - Will fire on animation progression.
 			onAnimationProgress: function(){},
 
@@ -2113,6 +2119,11 @@
 		frameDuration: 17,
 		animations: [],
 		dropFrames: 0,
+		animThen: Date.now(),
+		animNow: null,
+		elapsed: null,
+		fpsInterval: null,
+
 		addAnimation: function(chartInstance, animationObject) {
 			for (var index = 0; index < this.animations.length; ++ index){
 				if (this.animations[index].chartInstance === chartInstance){
@@ -2152,6 +2163,9 @@
 			var startTime = Date.now();
 			var framesToDrop = 0;
 
+			this.animNow = Date.now();
+	    	this.elapsed = this.animNow - this.animThen;
+
 			if(this.dropFrames > 1){
 				framesToDrop = Math.floor(this.dropFrames);
 				this.dropFrames -= framesToDrop;
@@ -2167,9 +2181,15 @@
 				if(this.animations[i].animationObject.currentStep > this.animations[i].animationObject.numSteps){
 					this.animations[i].animationObject.currentStep = this.animations[i].animationObject.numSteps;
 				}
-				
-				this.animations[i].animationObject.render(this.animations[i].chartInstance, this.animations[i].animationObject);
-				
+
+				this.fpsInterval = 1000 / this.animations[i].chartInstance.options.fps;
+				if (!this.animations[i].chartInstance.options.limitFps || this.elapsed > this.fpsInterval) {
+			        // Get ready for next frame by setting then=now, but...
+			        // Also, adjust for fpsInterval not being multiple of 16.67
+			        this.animThen = this.animNow - (this.elapsed % this.fpsInterval);
+					this.animations[i].animationObject.render(this.animations[i].chartInstance, this.animations[i].animationObject);
+				}
+
 				if (this.animations[i].animationObject.currentStep == this.animations[i].animationObject.numSteps){
 					// executed the last frame. Remove the animation.
 					this.animations.splice(i, 1);
